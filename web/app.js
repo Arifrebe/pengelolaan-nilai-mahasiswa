@@ -1,3 +1,77 @@
+// MOCK DATA MAHASISWA
+let mahasiswa = [
+    {
+        nim: "231401001",
+        nama: "Andi Saputra",
+        prodi: "Ilmu Komputer",
+        status: "Aktif"
+    },
+    {
+        nim: "231401002",
+        nama: "Budi Santoso",
+        prodi: "Ilmu Komputer",
+        status: "Aktif"
+    },
+    {
+        nim: "231401003",
+        nama: "Citra Amelia",
+        prodi: "Ilmu Komputer",
+        status: "Aktif"
+    }
+];
+
+// MOCK DATA GRAPH PRASYARAT
+const graph = {
+    nodes: [
+        { kode: "IF101", nama: "Algoritma Pemrograman" },
+        { kode: "IF102", nama: "Matematika Diskrit" },
+        { kode: "IF201", nama: "Struktur Data" },
+        { kode: "IF202", nama: "Basis Data" },
+        { kode: "IF301", nama: "Analisis Algoritma" }
+    ],
+
+    edges: [
+        { from: "IF101", to: "IF201" },
+        { from: "IF101", to: "IF202" },
+        { from: "IF201", to: "IF301" },
+        { from: "IF102", to: "IF301" }
+    ]
+};
+
+// MOCK DATA NILAI
+let nilai = [
+    {
+        nim: "231401001",
+        nama: "Andi Saputra",
+        matakuliah: "Algoritma Pemrograman",
+        nilai: 85,
+        grade: "A"
+    },
+    {
+        nim: "231401002",
+        nama: "Budi Santoso",
+        matakuliah: "Struktur Data",
+        nilai: 78,
+        grade: "B"
+    },
+    {
+        nim: "231401003",
+        nama: "Citra Amelia",
+        matakuliah: "Basis Data",
+        nilai: 92,
+        grade: "A"
+    }
+];
+
+// MOCK DATA MATA KULIAH
+let matakuliah = [
+    { kode: "IF101", nama: "Algoritma Pemrograman", sks: 3 },
+    { kode: "IF102", nama: "Matematika Diskrit", sks: 3 },
+    { kode: "IF201", nama: "Struktur Data", sks: 3 },
+    { kode: "IF202", nama: "Basis Data", sks: 3 },
+    { kode: "IF301", nama: "Analisis Algoritma", sks: 3 }
+];
+
 
 /* =========================================
    1. KONFIGURASI API
@@ -124,7 +198,7 @@ function showPage(pageId) {
 // Event navigasi sidebar
 document.querySelectorAll(".menu-item").forEach(item => {
 
-    item.addEventListener("click", function(event) {
+    item.addEventListener("click", function (event) {
 
         event.preventDefault();
 
@@ -317,7 +391,7 @@ async function searchMahasiswa(nim) {
 
 // Tombol cari
 document.getElementById("btnCariMahasiswa")
-    .addEventListener("click", function() {
+    .addEventListener("click", function () {
 
         const nim = document.getElementById("searchNim").value.trim();
 
@@ -333,7 +407,7 @@ document.getElementById("btnCariMahasiswa")
 
 // Cari ketika menekan Enter
 document.getElementById("searchNim")
-    .addEventListener("keydown", function(event) {
+    .addEventListener("keydown", function (event) {
 
         if (event.key === "Enter") {
             document.getElementById("btnCariMahasiswa").click();
@@ -344,7 +418,7 @@ document.getElementById("searchNim")
 
 // Tambah mahasiswa
 document.getElementById("btnTambahMahasiswa")
-    .addEventListener("click", async function() {
+    .addEventListener("click", async function () {
 
         const nim = prompt("Masukkan NIM mahasiswa:");
 
@@ -451,7 +525,7 @@ function renderNilai(grades) {
 
 // Sorting nilai melalui backend C
 document.getElementById("btnUrutkanNilai")
-    .addEventListener("click", async function() {
+    .addEventListener("click", async function () {
 
         const button = this;
 
@@ -562,7 +636,7 @@ function renderMatakuliah(courses) {
 
 // Tambah mata kuliah
 document.getElementById("btnTambahMatkul")
-    .addEventListener("click", async function() {
+    .addEventListener("click", async function () {
 
         const kode = prompt("Masukkan kode mata kuliah:");
 
@@ -608,7 +682,7 @@ document.getElementById("btnTambahMatkul")
 ========================================= */
 
 document.getElementById("btnCekKrs")
-    .addEventListener("click", async function() {
+    .addEventListener("click", async function () {
 
         const nim = document.getElementById("krsNim").value.trim();
 
@@ -708,12 +782,78 @@ function renderKRS(courses) {
 
 }
 
+// render graph prasyarat mata kuliah
+function renderGraph() {
+    const container = document.getElementById("graphContainer");
+
+    const nodes = new vis.DataSet(
+        graph.nodes.map(item => ({
+            id: item.kode,
+            label: `${item.kode}\n${item.nama}`,
+            shape: "box",
+            color: {
+                background: "#DBEAFE",
+                border: "#2563EB"
+            },
+            font: {
+                color: "#1E3A8A",
+                size: 14
+            },
+            margin: 12
+        }))
+    );
+
+    const edges = new vis.DataSet(
+        graph.edges.map(item => ({
+            from: item.from,
+            to: item.to,
+            arrows: "to"
+        }))
+    );
+
+    new vis.Network(
+        container,
+        { nodes, edges },
+
+        {
+            layout: {
+                hierarchical: {
+                    enabled: true,
+                    direction: "UD",
+                    sortMethod: "directed",
+                    levelSeparation: 120,
+                    nodeSpacing: 180
+                }
+            },
+            physics: {
+                enabled: false
+            },
+            interaction: {
+                dragNodes: true,
+                zoomView: true,
+                dragView: true
+            },
+            edges: {
+                color: "#64748B",
+                arrows: {
+                    to: {
+                        enabled: true,
+                        scaleFactor: 0.8
+                    }
+                },
+                smooth: true
+            }
+        }
+
+    );
+}
+
 
 /* =========================================
    9. INISIALISASI APLIKASI
 ========================================= */
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
     const initialPage = location.hash.replace("#", "");
 
@@ -733,3 +873,5 @@ document.addEventListener("DOMContentLoaded", function() {
     );
 
 });
+
+renderGraph();
