@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Academic System | Pengelolaan Akademik</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <i class="bi bi-mortarboard-fill"></i>
+                </div>
+
+                <div>
+                    <h5>Academic System</h5>
+                    <small>Student Management</small>
+                </div>
+            </div>
+
+            <div class="sidebar-menu">
+
+                <p class="menu-label">MENU UTAMA</p>
+
+                <a href="#dashboard" class="menu-item active">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+
+                <a href="#mahasiswa" class="menu-item">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Data Mahasiswa</span>
+                </a>
+
+                <a href="#nilai" class="menu-item">
+                    <i class="bi bi-journal-check"></i>
+                    <span>Pengelolaan Nilai</span>
+                </a>
+
+                <p class="menu-label mt-4">AKADEMIK</p>
+
+                <a href="#matakuliah" class="menu-item">
+                    <i class="bi bi-book-half"></i>
+                    <span>Mata Kuliah</span>
+                </a>
+
+                <a href="#prasyarat" class="menu-item">
+                    <i class="bi bi-diagram-3-fill"></i>
+                    <span>Prasyarat Mata Kuliah</span>
+                </a>
+
+                <a href="#krs" class="menu-item">
+                    <i class="bi bi-calendar2-check"></i>
+                    <span>Rekomendasi KRS</span>
+                </a>
+
+            </div>
+
+            <div class="sidebar-footer">
+                <i class="bi bi-code-slash"></i>
+                <span>Academic System v1.0</span>
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- TOPBAR -->
+            <header class="topbar">
+
+                <div>
+                    <h6>Selamat Datang!</h6>
+                    <small>Sistem Perencanaan Akademik Mahasiswa</small>
+                </div>
+
+                <div class="profile">
+                    <div class="profile-icon">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+
+                    <div>
+                        <strong>Administrator</strong>
+                        <small>Admin Akademik</small>
+                    </div>
+                </div>
+
+            </header>
+
+
+            <!-- PAGE CONTENT -->
+            <div class="content-wrapper">
+
+                <!-- DASHBOARD -->
+                <section id="dashboard" class="page-section">
+
+                    <div class="page-heading">
+                        <div>
+                            <h3>Dashboard</h3>
+                            <p>Ringkasan informasi akademik mahasiswa.</p>
+                        </div>
+
+                        <span class="date-label">
+                            <i class="bi bi-calendar3"></i>
+                            Tahun Akademik 2026/2027
+                        </span>
+                    </div>
+
+
+                    <!-- STATISTICS -->
+                    <div class="row g-3 mb-4">
+
+                        <div class="col-md-6 col-xl-3">
+                            <div class="stat-card">
+                                <div class="stat-icon blue">
+                                    <i class="bi bi-people-fill"></i>
+                                </div>
+
+                                <div>
+                                    <p>Total Mahasiswa</p>
+                                    <h3 id="totalMahasiswa">0</h3>
+                                    <small>Mahasiswa terdaftar</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-3">
+                            <div class="stat-card">
+                                <div class="stat-icon green">
+                                    <i class="bi bi-book-fill"></i>
+                                </div>
+
+                                <div>
+                                    <p>Total Mata Kuliah</p>
+                                    <h3 id="totalMatkul">0</h3>
+                                    <small>Mata kuliah tersedia</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-3">
+                            <div class="stat-card">
+                                <div class="stat-icon orange">
+                                    <i class="bi bi-journal-check"></i>
+                                </div>
+
+                                <div>
+                                    <p>Data Nilai</p>
+                                    <h3 id="totalNilai">0</h3>
+                                    <small>Nilai tercatat</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-3">
+                            <div class="stat-card">
+                                <div class="stat-icon purple">
+                                    <i class="bi bi-diagram-3-fill"></i>
+                                </div>
+
+                                <div>
+                                    <p>Relasi Prasyarat</p>
+                                    <h3 id="totalPrasyarat">0</h3>
+                                    <small>Hubungan mata kuliah</small>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- RECENT STUDENTS -->
+                    <div class="content-card">
+
+                        <div class="card-heading">
+                            <div>
+                                <h5>Data Mahasiswa</h5>
+                                <p>Daftar mahasiswa yang terdaftar dalam sistem.</p>
+                            </div>
+
+                            <button class="btn btn-primary btn-sm"
+                                onclick="showPage('mahasiswa')">
+                                <i class="bi bi-arrow-right"></i>
+                                Lihat Semua
+                            </button>
+                        </div>
+
+                        <div class="table-responsive">
+
+                            <table class="table align-middle">
+
+                                <thead>
+                                    <tr>
+                                        <th>NIM</th>
+                                        <th>Nama Mahasiswa</th>
+                                        <th>Program Studi</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="dashboardStudentTable">
+                                    <tr>
+                                        <td colspan="4" class="text-center text-muted py-4">
+                                            Belum ada data mahasiswa.
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- MAHASISWA -->
+                <section id="mahasiswa" class="page-section d-none">
+
+                    <div class="page-heading">
+                        <div>
+                            <h3>Data Mahasiswa</h3>
+                            <p>Kelola informasi dan data mahasiswa.</p>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-heading">
+                            <h5>Daftar Mahasiswa</h5>
+
+                            <button class="btn btn-primary btn-sm" id="btnTambahMahasiswa">
+                                <i class="bi bi-plus-lg"></i>
+                                Tambah Mahasiswa
+                            </button>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-5">
+                                <div class="input-group">
+                                    <input type="text" id="searchNim"
+                                        class="form-control"
+                                        placeholder="Cari mahasiswa berdasarkan NIM...">
+
+                                    <button class="btn btn-primary" id="btnCariMahasiswa">
+                                        <i class="bi bi-search"></i>
+                                        Cari
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>NIM</th>
+                                        <th>Nama</th>
+                                        <th>Program Studi</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="studentTable">
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-4">
+                                            Belum ada data mahasiswa.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- NILAI -->
+                <section id="nilai" class="page-section d-none">
+
+                    <div class="page-heading">
+                        <div>
+                            <h3>Pengelolaan Nilai</h3>
+                            <p>Catat, ubah, dan urutkan nilai mahasiswa.</p>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+
+                        <div class="card-heading">
+                            <h5>Daftar Nilai Mahasiswa</h5>
+
+                            <button class="btn btn-primary btn-sm" id="btnUrutkanNilai">
+                                <i class="bi bi-sort-down"></i>
+                                Urutkan Nilai
+                            </button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table align-middle">
+                                <thead>
+                                    <tr>
+                                        <th>NIM</th>
+                                        <th>Nama Mahasiswa</th>
+                                        <th>Mata Kuliah</th>
+                                        <th>Nilai</th>
+                                        <th>Grade</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="gradeTable">
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-4">
+                                            Belum ada data nilai.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- MATA KULIAH -->
+                <section id="matakuliah" class="page-section d-none">
+
+                    <div class="page-heading">
+                        <div>
+                            <h3>Mata Kuliah</h3>
+                            <p>Informasi mata kuliah dalam kurikulum akademik.</p>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-heading">
+                            <h5>Daftar Mata Kuliah</h5>
+
+                            <button class="btn btn-primary btn-sm" id="btnTambahMatkul">
+                                <i class="bi bi-plus-lg"></i>
+                                Tambah Mata Kuliah
+                            </button>
+                        </div>
+
+                        <div id="courseList" class="row g-3">
+                            <div class="col-12 text-center text-muted py-4">
+                                Belum ada data mata kuliah.
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- PRASYARAT -->
+                <section id="prasyarat" class="page-section d-none">
+
+                    <div class="page-heading">
+                        <div>
+                            <h3>Prasyarat Mata Kuliah</h3>
+                            <p>Visualisasi hubungan antar mata kuliah.</p>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h5>Struktur Graph Mata Kuliah</h5>
+
+                        <p class="text-muted">
+                            Bagian ini akan menampilkan hubungan mata kuliah
+                            menggunakan struktur data Graph.
+                        </p>
+
+                        <div id="graphContainer" class="graph-container">
+                            <i class="bi bi-diagram-3"></i>
+                            <p>Visualisasi graph akan ditampilkan di sini.</p>
+                        </div>
+                    </div>
+
+                </section>
+
+
+                <!-- KRS -->
+                <section id="krs" class="page-section d-none">
+
+                    <div class="page-heading">
+                        <div>
+                            <h3>Rekomendasi KRS</h3>
+                            <p>Periksa mata kuliah yang dapat diambil mahasiswa.</p>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+
+                        <h5>Perencanaan Kartu Rencana Studi</h5>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-5">
+                                <input type="text" id="krsNim"
+                                    class="form-control"
+                                    placeholder="Masukkan NIM mahasiswa">
+                            </div>
+
+                            <div class="col-md-auto">
+                                <button class="btn btn-primary" id="btnCekKrs">
+                                    <i class="bi bi-search"></i>
+                                    Periksa KRS
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="krsResult">
+                            <p class="text-muted">
+                                Hasil rekomendasi mata kuliah akan ditampilkan di sini.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+            <footer class="main-footer">
+                Academic System &copy; 2026
+                <span>Developed for Academic Project</span>
+            </footer>
+
+        </main>
+
+    </div>
+
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="app.js"></script>
+
+</body>
+</html>

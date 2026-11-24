@@ -1,0 +1,594 @@
+
+/* =========================================
+   1. GLOBAL STYLE
+========================================= */
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --sidebar: #17243a;
+    --sidebar-hover: #263750;
+    --background: #f5f7fb;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
+    --border: #e8edf4;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--background);
+    color: var(--text-dark);
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* =========================================
+   2. APP LAYOUT
+========================================= */
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =========================================
+   3. SIDEBAR
+========================================= */
+
+.sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: var(--sidebar);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 27px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    background: var(--primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+}
+
+.sidebar-brand h5 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.sidebar-brand small {
+    color: #9caec5;
+    font-size: 11px;
+}
+
+.sidebar-menu {
+    padding: 25px 14px;
+    flex: 1;
+}
+
+.menu-label {
+    color: #8192aa;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    padding: 0 12px;
+    margin-bottom: 12px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 12px 13px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    color: #b8c5d6;
+    font-size: 13px;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.menu-item i {
+    font-size: 17px;
+}
+
+.menu-item:hover {
+    background: var(--sidebar-hover);
+    color: var(--white);
+}
+
+.menu-item.active {
+    background: var(--primary);
+    color: var(--white);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.sidebar-footer {
+    padding: 18px 22px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: #8192aa;
+    font-size: 11px;
+}
+
+.sidebar-footer i {
+    margin-right: 7px;
+}
+
+
+/* =========================================
+   4. MAIN CONTENT
+========================================= */
+
+.main-content {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================
+   5. TOPBAR
+========================================= */
+
+.topbar {
+    min-height: 85px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 15px 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topbar h6 {
+    font-weight: 700;
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.topbar small {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e8efff;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+}
+
+.profile strong {
+    display: block;
+    font-size: 12px;
+}
+
+.profile small {
+    display: block;
+}
+
+
+/* =========================================
+   6. CONTENT WRAPPER
+========================================= */
+
+.content-wrapper {
+    padding: 30px 35px;
+    flex: 1;
+}
+
+.page-section {
+    animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 15px;
+}
+
+.page-heading h3 {
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.page-heading p {
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.date-label {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+
+/* =========================================
+   7. STATISTIC CARDS
+========================================= */
+
+.stat-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    height: 100%;
+    transition: 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+}
+
+.stat-icon.blue {
+    background: #e8efff;
+    color: #2563eb;
+}
+
+.stat-icon.green {
+    background: #e5f8ef;
+    color: #16a36a;
+}
+
+.stat-icon.orange {
+    background: #fff3df;
+    color: #e99520;
+}
+
+.stat-icon.purple {
+    background: #f1eaff;
+    color: #8555db;
+}
+
+.stat-card p {
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.stat-card h3 {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 3px;
+}
+
+.stat-card small {
+    color: #94a3b8;
+    font-size: 10px;
+}
+
+
+/* =========================================
+   8. CONTENT CARD
+========================================= */
+
+.content-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 24px;
+    margin-bottom: 22px;
+}
+
+.card-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+    gap: 15px;
+}
+
+.card-heading h5,
+.content-card h5 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.card-heading p {
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-bottom: 0;
+}
+
+
+/* =========================================
+   9. TABLE
+========================================= */
+
+.table {
+    margin-bottom: 0;
+    font-size: 12px;
+}
+
+.table thead th {
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.table tbody td {
+    padding: 15px 14px;
+    color: #475569;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================
+   10. FORM INPUT
+========================================= */
+
+.form-control {
+    font-size: 12px;
+    padding: 10px 13px;
+    border-color: var(--border);
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.btn {
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 7px;
+    padding: 9px 14px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+
+/* =========================================
+   11. GRAPH CONTAINER
+========================================= */
+
+.graph-container {
+    min-height: 280px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    background: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8;
+    margin-top: 18px;
+    gap: 10px;
+}
+
+.graph-container i {
+    font-size: 45px;
+}
+
+.graph-container p {
+    font-size: 12px;
+}
+
+
+/* =========================================
+   12. FOOTER
+========================================= */
+
+.main-footer {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    padding: 18px 35px;
+    color: #94a3b8;
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* =========================================
+   13. RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 992px) {
+
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-content {
+        margin-left: 220px;
+        width: calc(100% - 220px);
+    }
+
+    .content-wrapper {
+        padding: 25px 20px;
+    }
+
+    .topbar {
+        padding: 15px 20px;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        width: 70px;
+    }
+
+    .sidebar-brand {
+        justify-content: center;
+        padding: 20px 5px;
+    }
+
+    .sidebar-brand > div:last-child,
+    .menu-label,
+    .menu-item span,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .sidebar-menu {
+        padding: 20px 9px;
+    }
+
+    .menu-item {
+        justify-content: center;
+        padding: 13px 5px;
+    }
+
+    .menu-item i {
+        font-size: 19px;
+    }
+
+    .main-content {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+    }
+
+    .content-wrapper {
+        padding: 20px 14px;
+    }
+
+    .topbar {
+        padding: 14px;
+    }
+
+    .page-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .page-heading h3 {
+        font-size: 20px;
+    }
+
+    .date-label {
+        font-size: 10px;
+    }
+
+    .content-card {
+        padding: 16px;
+    }
+
+    .main-footer {
+        padding: 15px;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .profile strong {
+        font-size: 10px;
+    }
+
+    .profile small {
+        font-size: 9px;
+    }
+
+    .profile-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .card-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}
