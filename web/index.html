@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -196,7 +195,8 @@
                                 <p>Daftar mahasiswa yang terdaftar dalam sistem.</p>
                             </div>
 
-                            <button class="btn btn-primary btn-sm" onclick="showPage('mahasiswa')">
+                            <button class="btn btn-primary btn-sm"
+                                onclick="showPage('mahasiswa')">
                                 <i class="bi bi-arrow-right"></i>
                                 Lihat Semua
                             </button>
@@ -255,7 +255,8 @@
                         <div class="row mb-3">
                             <div class="col-md-5">
                                 <div class="input-group">
-                                    <input type="text" id="searchNim" class="form-control"
+                                    <input type="text" id="searchNim"
+                                        class="form-control"
                                         placeholder="Cari mahasiswa berdasarkan NIM...">
 
                                     <button class="btn btn-primary" id="btnCariMahasiswa">
@@ -371,7 +372,7 @@
 
 
                 <!-- PRASYARAT -->
-                <!-- <section id="prasyarat" class="page-section d-none">
+                <section id="prasyarat" class="page-section d-none">
 
                     <div class="page-heading">
                         <div>
@@ -394,35 +395,7 @@
                         </div>
                     </div>
 
-                </section> -->
-
-
-                <!-- PRASYARAT -->
-                <section id="prasyarat" class="page-section d-none">
-
-                    <div class="page-heading">
-                        <div>
-                            <h3>Prasyarat Mata Kuliah</h3>
-                            <p>Visualisasi hubungan antar mata kuliah.</p>
-                        </div>
-                    </div>
-
-                    <div class="content-card">
-                        <div class="card-heading">
-                            <h5>Struktur Graph Mata Kuliah</h5>
-                        </div>
-
-                        <p class="text-muted">
-                            Grafik menunjukkan hubungan prasyarat
-                            antar mata kuliah.
-                        </p>
-
-                        <div id="graphContainer" class="graph-container" style="height: 500px;">
-                        </div>
-                    </div>
-
                 </section>
-
 
 
                 <!-- KRS -->
@@ -441,7 +414,8 @@
 
                         <div class="row g-2 mb-3">
                             <div class="col-md-5">
-                                <input type="text" id="krsNim" class="form-control"
+                                <input type="text" id="krsNim"
+                                    class="form-control"
                                     placeholder="Masukkan NIM mahasiswa">
                             </div>
 
@@ -484,5 +458,4 @@
     <script src="app.js"></script>
 
 </body>
-
 </html>
