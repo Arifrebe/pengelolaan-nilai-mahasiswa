@@ -1,78 +1,3 @@
-// MOCK DATA MAHASISWA
-let mahasiswa = [
-    {
-        nim: "231401001",
-        nama: "Andi Saputra",
-        prodi: "Ilmu Komputer",
-        status: "Aktif"
-    },
-    {
-        nim: "231401002",
-        nama: "Budi Santoso",
-        prodi: "Ilmu Komputer",
-        status: "Aktif"
-    },
-    {
-        nim: "231401003",
-        nama: "Citra Amelia",
-        prodi: "Ilmu Komputer",
-        status: "Aktif"
-    }
-];
-
-// MOCK DATA GRAPH PRASYARAT
-const graph = {
-    nodes: [
-        { kode: "IF101", nama: "Algoritma Pemrograman" },
-        { kode: "IF102", nama: "Matematika Diskrit" },
-        { kode: "IF201", nama: "Struktur Data" },
-        { kode: "IF202", nama: "Basis Data" },
-        { kode: "IF301", nama: "Analisis Algoritma" }
-    ],
-
-    edges: [
-        { from: "IF101", to: "IF201" },
-        { from: "IF101", to: "IF202" },
-        { from: "IF201", to: "IF301" },
-        { from: "IF102", to: "IF301" }
-    ]
-};
-
-// MOCK DATA NILAI
-let nilai = [
-    {
-        nim: "231401001",
-        nama: "Andi Saputra",
-        matakuliah: "Algoritma Pemrograman",
-        nilai: 85,
-        grade: "A"
-    },
-    {
-        nim: "231401002",
-        nama: "Budi Santoso",
-        matakuliah: "Struktur Data",
-        nilai: 78,
-        grade: "B"
-    },
-    {
-        nim: "231401003",
-        nama: "Citra Amelia",
-        matakuliah: "Basis Data",
-        nilai: 92,
-        grade: "A"
-    }
-];
-
-// MOCK DATA MATA KULIAH
-let matakuliah = [
-    { kode: "IF101", nama: "Algoritma Pemrograman", sks: 3 },
-    { kode: "IF102", nama: "Matematika Diskrit", sks: 3 },
-    { kode: "IF201", nama: "Struktur Data", sks: 3 },
-    { kode: "IF202", nama: "Basis Data", sks: 3 },
-    { kode: "IF301", nama: "Analisis Algoritma", sks: 3 }
-];
-
-
 /* =========================================
    1. KONFIGURASI API
 ========================================= */
@@ -87,26 +12,40 @@ const API_BASE = "http://localhost:8000/api";
 
 // Mengirim request ke backend C
 async function apiRequest(endpoint, options = {}) {
+
+    const { headers, ...rest } = options;
+
+    let response;
+
     try {
-        const response = await fetch(`${API_BASE}${endpoint}`, {
+        response = await fetch(`${API_BASE}${endpoint}`, {
+            ...rest,
             headers: {
                 "Content-Type": "application/json",
-                ...options.headers
-            },
-            ...options
+                ...headers
+            }
         });
-
-        if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status}`);
-        }
-
-        return await response.json();
-
     } catch (error) {
         console.error("API Error:", error);
-
-        throw error;
+        throw new Error("Server tidak dapat dihubungi. Pastikan backend berjalan.");
     }
+
+    // Backend selalu membalas JSON: {success, data, message}
+    let body = null;
+
+    try {
+        body = await response.json();
+    } catch (error) {
+        // respons bukan JSON
+    }
+
+    if (!response.ok || body?.success === false) {
+        const message = body?.message || `HTTP Error: ${response.status}`;
+        console.error("API Error:", message);
+        throw new Error(message);
+    }
+
+    return body;
 }
 
 
@@ -308,7 +247,7 @@ async function loadMahasiswa() {
 
         table.innerHTML = emptyRow(
             5,
-            "Gagal memuat data. Periksa koneksi backend."
+            `Gagal memuat data: ${error.message}`
         );
 
     }
@@ -385,7 +324,7 @@ async function searchMahasiswa(nim) {
 
         table.innerHTML = emptyRow(
             5,
-            "Mahasiswa tidak ditemukan atau server tidak tersedia."
+            error.message
         );
 
     }
@@ -399,8 +338,9 @@ document.getElementById("btnCariMahasiswa")
 
         const nim = document.getElementById("searchNim").value.trim();
 
+        // Kolom kosong = tampilkan semua mahasiswa
         if (!nim) {
-            alert("Masukkan NIM terlebih dahulu.");
+            loadMahasiswa();
             return;
         }
 
@@ -453,7 +393,7 @@ document.getElementById("btnTambahMahasiswa")
 
         } catch (error) {
 
-            alert("Gagal menambahkan mahasiswa.");
+            alert(`Gagal menambahkan mahasiswa: ${error.message}`);
 
         }
 
@@ -482,7 +422,7 @@ async function loadNilai() {
 
         table.innerHTML = emptyRow(
             5,
-            "Gagal memuat data nilai."
+            `Gagal memuat data nilai: ${error.message}`
         );
 
     }
@@ -509,7 +449,10 @@ function renderNilai(grades) {
                 <strong>${escapeHTML(grade.nama)}</strong>
             </td>
 
-            <td>${escapeHTML(grade.matakuliah)}</td>
+            <td>
+                ${escapeHTML(grade.matakuliah)}
+                <small class="text-muted">${escapeHTML(grade.kode_matkul ?? "")}</small>
+            </td>
 
             <td>
                 <strong>${escapeHTML(grade.nilai)}</strong>
@@ -547,7 +490,7 @@ document.getElementById("btnUrutkanNilai")
 
         } catch (error) {
 
-            alert("Gagal mengurutkan nilai. Periksa backend.");
+            alert(`Gagal mengurutkan nilai: ${error.message}`);
 
         } finally {
 
@@ -584,7 +527,7 @@ async function loadMatakuliah() {
 
         container.innerHTML = `
             <div class="col-12 text-center text-muted py-4">
-                Gagal memuat mata kuliah.
+                Gagal memuat mata kuliah: ${escapeHTML(error.message)}
             </div>
         `;
 
@@ -627,6 +570,16 @@ function renderMatakuliah(courses) {
                     <small>
                         ${escapeHTML(course.sks ?? 0)} SKS
                     </small>
+
+                    <div>
+                        <small class="text-muted">
+                            Prasyarat: ${
+                                Array.isArray(course.prasyarat) && course.prasyarat.length
+                                    ? course.prasyarat.map(escapeHTML).join(", ")
+                                    : "-"
+                            }
+                        </small>
+                    </div>
                 </div>
 
             </div>
@@ -657,6 +610,17 @@ document.getElementById("btnTambahMatkul")
             return;
         }
 
+        const prasyaratInput = prompt(
+            "Kode prasyarat (pisahkan dengan koma, kosongkan jika tidak ada):"
+        );
+
+        if (prasyaratInput === null) return;
+
+        const prasyarat = prasyaratInput
+            .split(",")
+            .map(item => item.trim())
+            .filter(Boolean);
+
         try {
 
             await apiRequest("/matakuliah", {
@@ -664,7 +628,8 @@ document.getElementById("btnTambahMatkul")
                 body: JSON.stringify({
                     kode: kode.trim(),
                     nama: nama.trim(),
-                    sks: sks
+                    sks: sks,
+                    prasyarat: prasyarat
                 })
             });
 
@@ -674,7 +639,7 @@ document.getElementById("btnTambahMatkul")
 
         } catch (error) {
 
-            alert("Gagal menambahkan mata kuliah.");
+            alert(`Gagal menambahkan mata kuliah: ${error.message}`);
 
         }
 
@@ -715,7 +680,7 @@ document.getElementById("btnCekKrs")
 
             resultContainer.innerHTML = `
                 <p class="text-danger">
-                    Gagal mendapatkan rekomendasi KRS.
+                    ${escapeHTML(error.message)}
                 </p>
             `;
 
@@ -765,6 +730,7 @@ function renderKRS(courses) {
 
                             <small>
                                 ${escapeHTML(course.kode ?? "")}
+                                &middot; ${escapeHTML(course.sks ?? 0)} SKS
                             </small>
 
                             <div class="mt-2">
@@ -790,12 +756,23 @@ function renderKRS(courses) {
 async function renderGraph() {
     const container = document.getElementById("graphContainer");
 
-    // Ambil data graph dari backend C (menggantikan data mock)
+    // Library vis-network dimuat dari internet (CDN)
+    if (typeof vis === "undefined") {
+        container.innerHTML = "<p class=\"text-danger p-3\">Library graph (vis-network) tidak termuat. Periksa koneksi internet.</p>";
+        return;
+    }
+
+    // Ambil data graph dari backend C
     let graph;
     try {
         graph = getData(await apiRequest("/matakuliah/graph"));
     } catch (error) {
-        container.innerHTML = "<p class=\"text-danger p-3\">Gagal memuat graph prasyarat dari server.</p>";
+        container.innerHTML = `<p class="text-danger p-3">Gagal memuat graph prasyarat: ${escapeHTML(error.message)}</p>`;
+        return;
+    }
+
+    if (!graph?.nodes?.length) {
+        container.innerHTML = "<p class=\"text-muted p-3\">Belum ada data mata kuliah.</p>";
         return;
     }
 
