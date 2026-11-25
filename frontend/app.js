@@ -188,6 +188,10 @@ function showPage(pageId) {
         case "matakuliah":
             loadMatakuliah();
             break;
+
+        case "prasyarat":
+            renderGraph();   // gambar saat halaman terlihat (vis-network butuh container berukuran nyata)
+            break;
     }
 
     // Perbarui URL tanpa reload
@@ -783,8 +787,21 @@ function renderKRS(courses) {
 }
 
 // render graph prasyarat mata kuliah
-function renderGraph() {
+async function renderGraph() {
     const container = document.getElementById("graphContainer");
+
+    // Ambil data graph dari backend C (menggantikan data mock)
+    let graph;
+    try {
+        graph = getData(await apiRequest("/matakuliah/graph"));
+    } catch (error) {
+        container.innerHTML = "<p class=\"text-danger p-3\">Gagal memuat graph prasyarat dari server.</p>";
+        return;
+    }
+
+    container.innerHTML = "";          // hapus ikon/teks placeholder
+    container.style.display = "block";
+    container.style.height = "460px";
 
     const nodes = new vis.DataSet(
         graph.nodes.map(item => ({
@@ -873,5 +890,3 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 });
-
-renderGraph();
